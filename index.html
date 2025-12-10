@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖片壓縮工具</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>圖片壓縮工具</h1>
+        <p class="subtitle">支援 PNG、JPG、WebP 格式，壓縮至指定大小</p>
+
+        <!-- 設定區 -->
+        <div class="settings">
+            <label for="targetSize">目標大小 (KB)：</label>
+            <input type="number" id="targetSize" value="200" min="1" max="10000">
+
+            <label for="outputFormat">輸出格式：</label>
+            <select id="outputFormat">
+                <option value="image/jpeg">JPEG</option>
+                <option value="image/webp">WebP</option>
+                <option value="image/png">PNG</option>
+            </select>
+        </div>
+
+        <!-- 上傳區 -->
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-content">
+                <div class="upload-icon">📁</div>
+                <p>點擊或拖放圖片到這裡</p>
+                <p class="hint">支援 PNG、JPG、WebP</p>
+            </div>
+            <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" multiple hidden>
+        </div>
+
+        <!-- 結果區 -->
+        <div class="results" id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
