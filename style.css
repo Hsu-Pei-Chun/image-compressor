@@ -146,6 +146,11 @@ h1 {
     font-weight: bold;
 }
 
+.result-info .unchanged {
+    color: #ff9800;
+    font-weight: bold;
+}
+
 .download-btn {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;

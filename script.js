@@ -117,6 +117,11 @@ async function compressImage(file) {
             }
         }
 
+        // 如果壓縮後反而變大，使用原始檔案
+        if (resultBlob.size >= file.size) {
+            resultBlob = file;
+        }
+
         // 移除處理中訊息，顯示結果
         removeProcessing(processingId);
         showResult(file, resultBlob, outputFormat);
@@ -166,6 +171,7 @@ function showResult(originalFile, compressedBlob, format) {
     const originalSize = originalFile.size;
     const compressedSize = compressedBlob.size;
     const reduction = ((1 - compressedSize / originalSize) * 100).toFixed(1);
+    const isUnchanged = compressedSize >= originalSize;
 
     // 取得副檔名
     const ext = format.split('/')[1];
@@ -173,6 +179,12 @@ function showResult(originalFile, compressedBlob, format) {
 
     const div = document.createElement('div');
     div.className = 'result-item';
+
+    // 根據是否有壓縮顯示不同訊息
+    const statusText = isUnchanged
+        ? '<p class="unchanged">檔案已經很小，無需壓縮</p>'
+        : `<p class="reduction">減少了 ${reduction}%</p>`;
+
     div.innerHTML = `
         <img src="${URL.createObjectURL(compressedBlob)}" alt="預覽">
         <div class="result-info">
@@ -181,7 +193,7 @@ function showResult(originalFile, compressedBlob, format) {
                 原始大小: ${formatSize(originalSize)} →
                 <span>壓縮後: ${formatSize(compressedSize)}</span>
             </p>
-            <p class="reduction">減少了 ${reduction}%</p>
+            ${statusText}
         </div>
         <button class="download-btn" onclick="downloadBlob('${URL.createObjectURL(compressedBlob)}', '${newFileName}')">
             下載
